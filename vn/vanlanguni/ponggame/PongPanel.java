@@ -209,8 +209,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			/* Show welcome screen */
 
 			// Draw game title and start message
-			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
-			g.drawString("Pong Game", 130, 100);
+			g.setColor(Color.CYAN);
+			g.setFont(new Font("Colonna MT", 3, 80));
+			g.drawString("Pong Game", 40, 150);
 
 			// FIXME Wellcome message below show smaller than game title
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
@@ -224,9 +225,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			int playerTwoLeft = playerTwoX;
 
 			// draw dashed line down center
+			g.setColor(Color.GREEN);
 			for (int lineY = 0; lineY < getHeight(); lineY += 50) {
 				g.drawLine(250, lineY, 250, lineY + 25);
-				g.setColor(Color.GREEN);
 			}
 
 			// draw "goal lines" on each side
@@ -236,9 +237,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// draw the scores
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.setColor(Color.BLUE);
-			g.drawString(String.valueOf(playerOneScore), 100, 100); // Player 1
+			g.drawString(String.valueOf(playerOneScore), 120, 100); // Player 1
 																	// score
-			g.drawString(String.valueOf(playerTwoScore), 400, 100); // Player 2
+			g.drawString(String.valueOf(playerTwoScore), 360, 100); // Player 2
 																	// score
 
 			// draw the ball
@@ -256,20 +257,20 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// TODO Set Blue color
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.setColor(Color.BLUE);
-			g.drawString(String.valueOf(playerOneScore), 100, 100);
-			g.drawString(String.valueOf(playerTwoScore), 400, 100);
+			g.drawString(String.valueOf(playerOneScore), 120, 200);
+			g.drawString(String.valueOf(playerTwoScore), 360, 200);
 
 			// Draw the winner name
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			if (playerOneScore > playerTwoScore) {
-				g.drawString("Player 1 Wins!", 165, 200);
+				g.drawString("Player 1 Wins!", 130, 100);
 			} else {
-				g.drawString("Player 2 Wins!", 165, 200);
+				g.drawString("Player 2 Wins!", 130, 100);
 			}
 
 			// Draw Restart message
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
-			g.drawString("Press 'SPACE' to Restart the game.", 175, 400);
+			g.drawString("Press 'SPACE' to Restart the game.", 100, 400);
 		// TODO Draw a restart message
 		}
 	}
