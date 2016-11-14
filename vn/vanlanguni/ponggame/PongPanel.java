@@ -216,8 +216,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// FIXME Wellcome message below show smaller than game title
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 			g.drawString("Press 'P' to play.", getWidth()/2-75, getHeight()/2+80);
-			ballX = getWidth()/2;
-			ballY = getHeight()/2;
+			ballX = getWidth()/2-10;
+			ballY = getHeight()/2-10;
+			playerTwoY = getHeight()/2-30;
+			playerOneY = getHeight()/2-30;
 		} else if (playing) {
 
 			/* Game is playing */
