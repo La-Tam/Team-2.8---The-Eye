@@ -24,7 +24,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -39,6 +42,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private boolean showTitleScreen = true;
 	private boolean playing;
 	private boolean gameOver;
+	private int interval = 1000 / 60;
 
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
@@ -74,6 +78,14 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Player score, show on upper left and right. */
 	private int playerOneScore;
 	private int playerTwoScore;
+	
+	/** Icon game*/
+	private ImageIcon imPlus = new ImageIcon("./icon/Plus.png");
+	private	int IconPlusY;
+	private	int IconPlusX;
+	private int IconPlusW_H = 30;
+	boolean blicon=false;
+	int timeToDisplay;
 
 	/** Construct a PongPanel. */
 	public PongPanel() {
@@ -84,8 +96,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		addKeyListener(this);
 
 		// call step() 60 fps
-		Timer timer = new Timer(1000 / 300, this);
+		Timer timer = new Timer(interval, this);
 		timer.start();
+		// draw icon
+		timeToDisplay = ThreadLocalRandom.current().nextInt(5,15+1)*1000;
 	}
 
 	/** Implement actionPerformed */
@@ -131,7 +145,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			int nextBallTop = ballY + ballDeltaY;
 			int nextBallBottom = ballY + diameter + ballDeltaY;
 
-
+			// IconPlus
+			int IconPlusLeft = IconPlusX;
+			int IconPlusRight = IconPlusX+30;
+			int IconPlusTop = IconPlusY;
+			int IconPlusButtom = IconPlusY+30;
+			
 			// Player 1's paddle position
 			int playerOneRight = playerOneX + playerOneWidth;
 			int playerOneTop = playerOneY;
@@ -189,6 +208,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					ballDeltaX *= -1;
 				}
 			}
+			
+			// Ball hit icon;
+			if (nextBallLeft < IconPlusRight || nextBallRight > IconPlusLeft) {
+				if (nextBallTop > IconPlusButtom && nextBallBottom < IconPlusTop) {
+					IconPlusW_H = 0;
+				}
+			}
 
 			// move the ball
 			ballX += ballDeltaX;
@@ -220,6 +246,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			ballY = getHeight()/2-10;
 			playerTwoY = getHeight()/2-30;
 			playerOneY = getHeight()/2-30;
+			IconPlusX = ThreadLocalRandom.current().nextInt(getWidth()-100) + 100;
+			IconPlusY = ThreadLocalRandom.current().nextInt(getHeight()-30) + 0;
 		} else if (playing) {
 
 			/* Game is playing */
@@ -253,6 +281,26 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// draw the paddles
 			g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
 			g.fillRect(getWidth()-10, playerTwoY, playerTwoWidth, playerTwoHeight);
+			
+			// draw icon
+			timeToDisplay -= interval;
+			System.out.println(timeToDisplay);
+			if (timeToDisplay < 0) {
+				blicon=true;
+				if (blicon==true) {
+					IconPlusX = ThreadLocalRandom.current().nextInt(getWidth()-100) + 100;
+					IconPlusY = ThreadLocalRandom.current().nextInt(getHeight()-30) + 0;
+					timeToDisplay = ThreadLocalRandom.current().nextInt(5,15+1)*1000;
+				}
+			}
+			if (timeToDisplay < timeToDisplay-4000) {
+				blicon=false;
+			}
+			if (blicon==true) {
+				IconPlusW_H = 30;
+				g.drawImage(imPlus.getImage() , IconPlusX, IconPlusY, IconPlusW_H, IconPlusW_H, null);		
+			} 
+
 		} else if (gameOver) {
 
 			/* Show End game screen with winner name and score */
@@ -274,7 +322,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// Draw Restart message
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, getWidth()/22));
 			g.drawString("Press 'SPACE' to Restart the game.", getWidth()/7, getHeight()*4/5);
-		// TODO Draw a restart message
+			// TODO Draw a restart message
+			blicon=false;
 		}
 	}
 
