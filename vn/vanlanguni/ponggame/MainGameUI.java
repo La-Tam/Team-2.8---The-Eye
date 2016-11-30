@@ -21,6 +21,7 @@ public class MainGameUI extends JFrame{
 	private PongPanel pongPanel;
 	
 	public MainGameUI(){
+		setResizable(false);
 		setPreferredSize(new Dimension(_WIDTH, _HEIGHT));
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

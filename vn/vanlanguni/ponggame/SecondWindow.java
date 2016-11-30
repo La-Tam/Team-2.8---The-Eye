@@ -28,8 +28,8 @@ public class SecondWindow extends JDialog{
 		setModal(true);
 		
 		dialogResult = MyDialogResult.DEFAULT;
-		txtUsername1 = new JTextField(10);
-		txtUsername2 = new JTextField(10);
+		txtUsername1 = new JTextField("Play 1");
+		txtUsername2 = new JTextField("Play 2");
 		getContentPane().add(txtUsername1);
 		getContentPane().add(txtUsername2);
 		txtUsername1.setBounds(90, 26, 100, 20);

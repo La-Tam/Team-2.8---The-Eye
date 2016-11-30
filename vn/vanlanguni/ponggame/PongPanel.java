@@ -18,12 +18,15 @@
 package vn.vanlanguni.ponggame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.ImageIcon;
@@ -338,6 +341,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// draw dashed line down center
 			g.setColor(Color.GREEN);
+			g.drawString(sNameUserOne, 50, 50);
+			g.drawString(sNameUserTwo, 290, 50);
 			for (int lineY = 0; lineY < getHeight(); lineY += 50) {
 				g.drawLine(getWidth()/2, lineY, getWidth()/2, lineY + 25);
 			}
@@ -402,6 +407,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			lblSetting.setVisible(false);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, getWidth()/13));
 			g.setColor(Color.BLUE);
+			g.drawString(sNameUserOne, 40, 150);
+			g.drawString(sNameUserTwo, 280, 150);
 			g.drawString(String.valueOf(playerOneScore), getWidth()/4-10, getHeight()/2);
 			g.drawString(String.valueOf(playerTwoScore), getWidth()*3/4-10, getHeight()/2);
 
