@@ -45,7 +45,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
-
+	private ImageIcon icon = new ImageIcon("./BackGround/images.jpg");
 	/** State on the control keys. */
 	private boolean upPressed;
 	private boolean downPressed;
@@ -291,7 +291,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			IconX = ThreadLocalRandom.current().nextInt(getWidth()-100) + 100;
 			IconY = ThreadLocalRandom.current().nextInt(getHeight()-30) + 0;
 		} else if (playing) {
-
+			Dimension d = getSize();
+			g.drawImage(icon.getImage(), 0, 0, d.width, d.height, null);
 			/* Game is playing */
 
 			// set the coordinate limit
