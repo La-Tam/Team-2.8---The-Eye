@@ -79,12 +79,21 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private int playerTwoScore;
 	
 	/** Icon game*/
-	private ImageIcon imPlus = new ImageIcon("./icon/Plus.png");
-	private	int IconPlusY;
-	private	int IconPlusX;
-	private int IconPlusW_H = 30;
+	private ImageIcon 	imPlus = new ImageIcon("./icon/Plus.png"),
+				imMinus = new ImageIcon("./icon/Minus.png");
+	private	int IconY;
+	private	int IconX;
+	private int IconW_H = 30;
 	boolean blicon=false;
+	boolean playerOneHitBall=false;
+	boolean playerTwoHitBall=false;
+	boolean iconPlus=false;
+	boolean iconMinus=false;
 	int timeToDisplay;
+	int timeToOutDisplay=4000;
+	int ranCongTru;
+	int IconPlusCenterX;
+	int IconPlusCenterY;
 
 	/** Construct a PongPanel. */
 	public PongPanel() {
@@ -97,7 +106,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		// call step() 60 fps
 		Timer timer = new Timer(interval, this);
 		timer.start();
-		// draw icon
 		timeToDisplay = ThreadLocalRandom.current().nextInt(5,15+1)*1000;
 	}
 
@@ -143,12 +151,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// FIXME Something not quite right here
 			int nextBallTop = ballY + ballDeltaY;
 			int nextBallBottom = ballY + diameter + ballDeltaY;
-
-			// IconPlus
-			int IconPlusLeft = IconPlusX;
-			int IconPlusRight = IconPlusX+30;
-			int IconPlusTop = IconPlusY;
-			int IconPlusButtom = IconPlusY+30;
+			int nextBallCenterX = ballX + diameter + 10;
+			int nextBallCenterY = ballY + diameter + 10;
 			
 			// Player 1's paddle position
 			int playerOneRight = playerOneX + playerOneWidth;
@@ -187,7 +191,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					// FIXME Something wrong here
 					ballDeltaX *= -1;
 					Sound.play("sound/pongsound.wav");
-					
+					playerOneHitBall = true;
+					playerTwoHitBall = false;
 				}
 			}
 
@@ -212,13 +217,33 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					// FIXME Something wrong here
 					ballDeltaX *= -1;
 					Sound.play("sound/pongsound.wav");
+					playerOneHitBall = false;
+					playerTwoHitBall = true;
 				}
 			}
 			
 			// Ball hit icon;
-			if (nextBallLeft < IconPlusRight || nextBallRight > IconPlusLeft) {
-				if (nextBallTop > IconPlusButtom && nextBallBottom < IconPlusTop) {
-					IconPlusW_H = 0;
+			if (blicon==true) {
+				if ((nextBallCenterX+10) >= (IconPlusCenterX-10) && (nextBallCenterX-10) <= (IconPlusCenterX+10)) {
+					if ((nextBallCenterY+10) >= (IconPlusCenterY-10) && (nextBallCenterY-10) <= (IconPlusCenterY+10)) {
+						if (iconMinus==true) {
+							if (playerOneHitBall==true) {
+								playerOneHeight -= 10;
+							}
+							if (playerTwoHitBall==true) {
+								playerTwoHeight -= 10;
+							}
+						}
+						if (iconPlus) {
+							if (playerOneHitBall==true) {
+								playerOneHeight += 10;
+							}
+							if (playerTwoHitBall==true) {
+								playerTwoHeight += 10;
+							}
+						}
+						blicon = false;
+					}
 				}
 			}
 
@@ -290,22 +315,34 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			
 			// draw icon
 			timeToDisplay -= interval;
-		
 			if (timeToDisplay < 0) {
 				blicon=true;
 				if (blicon==true) {
-					IconPlusX = ThreadLocalRandom.current().nextInt(getWidth()-100) + 100;
-					IconPlusY = ThreadLocalRandom.current().nextInt(getHeight()-30) + 0;
+					IconX = ThreadLocalRandom.current().nextInt(getWidth()-250) + 150;
+					IconY = ThreadLocalRandom.current().nextInt(getHeight()-30) + 0;
+					IconPlusCenterX = IconX+10;
+					IconPlusCenterY = IconY+10;
+					ranCongTru = ThreadLocalRandom.current().nextInt(20) + 1;
 					timeToDisplay = ThreadLocalRandom.current().nextInt(5,15+1)*1000;
 				}
 			}
-			if (timeToDisplay < timeToDisplay-4000) {
-				blicon=false;
-			}
 			if (blicon==true) {
-				IconPlusW_H = 30;
-				g.drawImage(imPlus.getImage() , IconPlusX, IconPlusY, IconPlusW_H, IconPlusW_H, null);		
-			} 
+				IconW_H = 30;
+				if (ranCongTru%2==0) {
+					iconPlus = true;
+					iconMinus = false;
+					g.drawImage(imPlus.getImage() , IconX, IconY, IconW_H, IconW_H, null);	
+				} else {
+					iconMinus = true;
+					iconPlus = false;
+					g.drawImage(imMinus.getImage() , IconX, IconY, IconW_H, IconW_H, null);
+				}
+				timeToOutDisplay -= interval;
+			}
+			if (timeToOutDisplay < 0) {
+				blicon = false;
+				timeToOutDisplay = 4000;
+			}
 
 		} else if (gameOver) {
 
@@ -362,6 +399,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			playerTwoY = 220;
 			ballX = 240;
 			ballY = 240;
+			playerOneHeight = 60;
+			playerOneHitBall = false;
+			playerTwoHeight = 60;
+			playerTwoHitBall = false;
 		}
 	}
 
