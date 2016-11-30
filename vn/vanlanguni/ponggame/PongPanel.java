@@ -49,8 +49,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private boolean gameOver;
 
 	/** Background. */
-	private ImageIcon icon = new ImageIcon("./BackGround/g.jpg"),
-			iicon = new ImageIcon("./BackGround/d.jpg");
+	private ImageIcon icon = new ImageIcon("./BackGround/BackGround.jpg");
+	
 	private Color backgroundColor = Color.PINK;
 	
 	// Random +/-
@@ -253,8 +253,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			/* Show welcome screen */
 
-			Dimension d = getSize();
-			g.drawImage(iicon.getImage(), 0, 0, d.width, d.height, null);
+			
 			// Draw game title and start message
 			g.setColor(Color.YELLOW);
 			g.setFont(new Font("Colonna MT", 3, getWidth() / 7));
@@ -268,6 +267,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		} else if (playing) {
 			Dimension d = getSize();
 			g.drawImage(icon.getImage(), 0, 0, d.width, d.height, null);
+		
+			lblSetting.setVisible(false);
 			/* Game is playing */
 
 			// set the coordinate limit
