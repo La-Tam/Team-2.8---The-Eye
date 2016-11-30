@@ -98,6 +98,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Sound */
 	Sound paddleSound = new Sound("./sound/pongsound.wav");
 	Sound pongSound = new Sound("./sound/pongsound.wav");
+	Sound player1failSound = new Sound("./sound/fatality.wav");
+	Sound player2failSound = new Sound("./sound/you-lose.wav");
+	Sound goalSound = new Sound("./sound/goal.wav");
+	Sound newgameSound = new Sound("./sound/fight.wav");
+	Sound backgroundSound = new Sound("./sound/Aldnoah.wav");
 
 	/** Construct a PongPanel. */
 	public PongPanel() {
@@ -106,7 +111,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		// listen to key presses
 		setFocusable(true);
 		addKeyListener(this);
-
+		//background sound
+		backgroundSound.playSound();
 		// call step() 60 fps
 		Timer timer = new Timer(interval, this);
 		timer.start();
@@ -124,7 +130,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		if (playing) {
 
 			/* Playing mode */
-
+			backgroundSound.stopSound();
 			// move player 1
 			// Move up if after moving, paddle is not outside the screen
 			if (wPressed && playerOneY - paddleSpeed > 0) {
@@ -181,12 +187,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 				if (nextBallTop > playerOneBottom || nextBallBottom < playerOneTop) {
 
 					playerTwoScore++;
+					goalSound.playSound();
 
 					// Player 2 Win, restart the game
 					if (playerTwoScore == 3) {
 						playing = false;
 						gameOver = true;
-						
+						player2failSound.playSound();
 					}
 					ballX = getWidth()/2;
 					ballY = getHeight()/2;
@@ -206,12 +213,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 				if (nextBallTop > playerTwoBottom || nextBallBottom < playerTwoTop) {
 
 					playerOneScore++;
-
+					goalSound.playSound();
 					// Player 1 Win, restart the game
 					if (playerOneScore == 3) {
 						playing = false;
 						gameOver = true;
-						
+						player1failSound.playSound();
 					}
 					ballX = getWidth()/2;
 					ballY = getHeight()/2;
@@ -378,7 +385,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (showTitleScreen) {
 			if (e.getKeyCode() == KeyEvent.VK_P) {
-				
+				newgameSound.playSound();
 				showTitleScreen = false;
 				playing = true;
 			}
@@ -396,7 +403,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			gameOver = false;
 			showTitleScreen = false;
 			playing = true;
-			
+			newgameSound.playSound();
 			playerOneScore = 0;
 			playerTwoScore = 0;
 			playerOneY = 220;
