@@ -27,6 +27,7 @@ import java.awt.event.KeyListener;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -328,6 +329,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		} else if (playing) {
 			Dimension d = getSize();
 			g.drawImage(icon.getImage(), 0, 0, d.width, d.height, null);
+			lblSetting.setVisible(false);
 			/* Game is playing */
 
 			// set the coordinate limit
@@ -397,6 +399,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// Draw scores
 			// TODO Set Blue color
+			lblSetting.setVisible(false);
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, getWidth()/13));
 			g.setColor(Color.BLUE);
 			g.drawString(String.valueOf(playerOneScore), getWidth()/4-10, getHeight()/2);
