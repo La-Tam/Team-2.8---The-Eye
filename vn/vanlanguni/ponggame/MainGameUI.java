@@ -4,6 +4,7 @@
  * 
  * 
  */
+package vn.vanlanguni.ponggame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
