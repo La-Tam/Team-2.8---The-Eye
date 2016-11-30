@@ -277,8 +277,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			ballY = getHeight()/2-10;
 			playerTwoY = getHeight()/2-30;
 			playerOneY = getHeight()/2-30;
-			IconPlusX = ThreadLocalRandom.current().nextInt(getWidth()-100) + 100;
-			IconPlusY = ThreadLocalRandom.current().nextInt(getHeight()-30) + 0;
+			IconX = ThreadLocalRandom.current().nextInt(getWidth()-100) + 100;
+			IconY = ThreadLocalRandom.current().nextInt(getHeight()-30) + 0;
 		} else if (playing) {
 
 			/* Game is playing */
