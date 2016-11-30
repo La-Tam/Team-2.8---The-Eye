@@ -46,7 +46,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
 	private ImageIcon icon = new ImageIcon("./BackGround/images.jpg");
-	
+	private ImageIcon sicon = new ImageIcon("./BackGround/images1.jpg");
 	// setting
 	JLabel lblSetting = new JLabel();
 	Color colorpaddle = Color.red;
@@ -309,6 +309,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			/* Show welcome screen */
 
 			// Draw game title and start message
+			Dimension d = getSize();
+			g.drawImage(sicon.getImage(), 0, 0, d.width, d.height, null);
+			
 			g.setColor(Color.CYAN);
 			g.setFont(new Font("Colonna MT", 3, getWidth()/7));
 			g.drawString("Pong Game", getWidth()/8, getHeight()/2-40);
