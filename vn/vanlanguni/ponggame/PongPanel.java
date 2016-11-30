@@ -95,6 +95,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	int IconPlusCenterX;
 	int IconPlusCenterY;
 
+	/** Sound */
+	Sound paddleSound = new Sound("./sound/pongsound.wav");
+	Sound pongSound = new Sound("./sound/pongsound.wav");
+
 	/** Construct a PongPanel. */
 	public PongPanel() {
 		setBackground(backgroundColor);
@@ -167,7 +171,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// ball bounces off top and bottom of screen
 			if (nextBallTop < 0 || nextBallBottom > getHeight()) {
 				ballDeltaY *= -1;
-				Sound.play("sound/pongsound.wav");
+				pongSound.playSound();
 				
 			}
 
@@ -182,7 +186,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					if (playerTwoScore == 3) {
 						playing = false;
 						gameOver = true;
-						Sound.play("sound/you-lose.wav");
+						
 					}
 					ballX = getWidth()/2;
 					ballY = getHeight()/2;
@@ -190,7 +194,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
 					ballDeltaX *= -1;
-					Sound.play("sound/pongsound.wav");
+					paddleSound.playSound();
 					playerOneHitBall = true;
 					playerTwoHitBall = false;
 				}
@@ -207,7 +211,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					if (playerOneScore == 3) {
 						playing = false;
 						gameOver = true;
-						Sound.play("sound/fatality.wav");
+						
 					}
 					ballX = getWidth()/2;
 					ballY = getHeight()/2;
@@ -216,7 +220,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					// If the ball hitting the paddle, it will bounce back
 					// FIXME Something wrong here
 					ballDeltaX *= -1;
-					Sound.play("sound/pongsound.wav");
+					paddleSound.playSound();
 					playerOneHitBall = false;
 					playerTwoHitBall = true;
 				}
@@ -374,7 +378,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (showTitleScreen) {
 			if (e.getKeyCode() == KeyEvent.VK_P) {
-				Sound.play("sound/fight.wav");
+				
 				showTitleScreen = false;
 				playing = true;
 			}
@@ -392,7 +396,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			gameOver = false;
 			showTitleScreen = false;
 			playing = true;
-			Sound.play("sound/fight.wav");
+			
 			playerOneScore = 0;
 			playerTwoScore = 0;
 			playerOneY = 220;
