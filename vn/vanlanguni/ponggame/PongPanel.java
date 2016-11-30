@@ -46,6 +46,14 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
 	private ImageIcon icon = new ImageIcon("./BackGround/images.jpg");
+	
+	// setting
+	JLabel lblSetting = new JLabel();
+	Color colorpaddle = Color.red;
+	String sNameUserOne = "Player one";
+	String sNameUserTwo = "Player two";
+	int ballnumber = 1;
+	
 	/** State on the control keys. */
 	private boolean upPressed;
 	private boolean downPressed;
@@ -109,8 +117,32 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		setBackground(backgroundColor);
 
 		// listen to key presses
+		
+		
 		setFocusable(true);
 		addKeyListener(this);
+		setLayout(null);
+
+		ImageIcon imgSetting = new ImageIcon("./BackGround/Setting.png");
+		lblSetting.setIcon(imgSetting);
+		add(lblSetting);
+		lblSetting.setBounds(175, 330, 110, 80);
+		lblSetting.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(e);
+				SecondWindow f = new SecondWindow();
+				f.setVisible(true);
+				Settings st = f.getSetings();
+				sNameUserOne = st.getUserName1();
+				sNameUserTwo = st.getUserName2();
+				colorpaddle = st.getPaddleColor();
+				ballnumber = st.getBallNumber();
+			}
+
+		});
 		//background sound
 		backgroundSound.playSound();
 		// call step() 60 fps
