@@ -130,7 +130,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		ImageIcon imgSetting = new ImageIcon("./BackGround/Setting.png");
 		lblSetting.setIcon(imgSetting);
 		add(lblSetting);
-		lblSetting.setBounds(175, 330, 110, 80);
+		lblSetting.setBounds(200, 330, 110, 80);
 		lblSetting.addMouseListener(new MouseAdapter() {
 
 			@Override
