@@ -49,8 +49,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 	/** Background. */
 	private Color backgroundColor = Color.BLACK;
-	private ImageIcon icon = new ImageIcon("./BackGround/images.jpg");
-	private ImageIcon sicon = new ImageIcon("./BackGround/images1.jpg");
+	private ImageIcon icon = new ImageIcon("./BackGround/images1.jpg");
+	private ImageIcon sicon = new ImageIcon("./BackGround/images.jpg");
+	private ImageIcon licon = new ImageIcon("./BackGround/images2.jpg");
 	// setting
 	JLabel lblSetting = new JLabel();
 	Color colorpaddle = Color.red;
@@ -402,7 +403,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		} else if (gameOver) {
 
 			/* Show End game screen with winner name and score */
-
+			Dimension d = getSize();
+			g.drawImage(licon.getImage(), 0, 0, d.width, d.height, null);
 			// Draw scores
 			// TODO Set Blue color
 			lblSetting.setVisible(false);
