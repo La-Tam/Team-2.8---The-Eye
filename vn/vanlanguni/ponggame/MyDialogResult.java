@@ -1,4 +1,4 @@
-
+package vn.vanlanguni.ponggame;
 
 public enum MyDialogResult {
 	YES,

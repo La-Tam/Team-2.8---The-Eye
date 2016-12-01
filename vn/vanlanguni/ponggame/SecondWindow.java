@@ -1,17 +1,22 @@
+package vn.vanlanguni.ponggame;
+
 
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
@@ -20,9 +25,11 @@ public class SecondWindow extends JDialog{
 	private JTextField txtUsername2;
 	//Xem khai bao MyDialogResult o cuoi class nay
 	public MyDialogResult dialogResult;
+	private JLabel lblChooseColorPaddle = new JLabel("Set Color Paddle: ");
+	//add color
 	Color paddleColor;
 	public SecondWindow() {
-		setPreferredSize(new Dimension(300, 200));
+		setPreferredSize(new Dimension(400, 450));
 		setTitle("Second Window");
 		getContentPane().setLayout(null);
 		setModal(true);
@@ -42,6 +49,10 @@ public class SecondWindow extends JDialog{
 		JLabel lblUser_2 = new JLabel("Username 2");
 		lblUser_2.setBounds(10, 69, 71, 14);
 		getContentPane().add(lblUser_2);
+		
+		add(lblChooseColorPaddle);
+		lblChooseColorPaddle.setFont(new Font(Font.DIALOG, Font.BOLD, 25));
+		lblChooseColorPaddle.setBounds(5, 300, 250, 35);
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
@@ -75,9 +86,9 @@ public class SecondWindow extends JDialog{
 				}				
 			}
 		});
-		JButton btnPad=new JButton();
+		JButton btnPad=new JButton("Chose Color");
 		add(btnPad);
-		btnPad.setBounds(10,200,100,25);
+		btnPad.setBounds(10,350,150,25);
 		btnPad.addActionListener(new ActionListener() {
 			
 			@Override
