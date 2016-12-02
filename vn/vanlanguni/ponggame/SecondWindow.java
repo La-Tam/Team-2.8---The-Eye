@@ -90,6 +90,7 @@ public class SecondWindow extends JDialog{
 		    groupball.add(radAni);
 		    groupball.add(raddog);
 		    groupball.add(radIr);
+		radSoccer.setSelected(true);
 		   
 		
 		JButton btnSave = new JButton("Save");

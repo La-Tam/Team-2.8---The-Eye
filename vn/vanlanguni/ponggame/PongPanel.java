@@ -384,8 +384,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 
 			// draw dashed line down center
 			g.setColor(Color.GREEN);
-			g.drawString(sNameUserOne, 50, 50);
-			g.drawString(sNameUserTwo, 290, 50);
+			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
+			g.drawString(sNameUserOne, getWidth() / 4 - 20, 90);
+			g.drawString(sNameUserTwo, getWidth() * 3 / 4 - 20, 90);
 			for (int lineY = 0; lineY < getHeight(); lineY += 50) {
 				g.drawLine(getWidth() / 2, lineY, getWidth() / 2, lineY + 25);
 			}
@@ -397,10 +398,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// draw the scores
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
 			g.setColor(Color.BLUE);
-			g.drawString(String.valueOf(playerOneScore), getWidth() / 4 - 10, 100); // Player
+			g.drawString(String.valueOf(playerOneScore), getWidth() / 4 - 10, 130); // Player
 																					// 1
 			// score
-			g.drawString(String.valueOf(playerTwoScore), getWidth() * 3 / 4 - 10, 100); // Player
+			g.drawString(String.valueOf(playerTwoScore), getWidth() * 3 / 4 - 10, 130); // Player
 																						// 2
 			// score
 
