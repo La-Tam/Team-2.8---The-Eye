@@ -29,6 +29,7 @@ public class MainGameUI extends JFrame{
 		pongPanel = new PongPanel();
 		getContentPane().add(pongPanel, BorderLayout.CENTER);
 		pack();
+		setLocationRelativeTo(null);
 	}
 
     public static void main(String[] args) {

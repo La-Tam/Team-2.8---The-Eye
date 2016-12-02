@@ -76,8 +76,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private int ballX = 240;
 	private int ballY = 240;
 	private int diameter = 20;
-	private int ballDeltaX = -1;
-	private int ballDeltaY = 3;
+	private int ballDeltaX = -2;
+	private int ballDeltaY = 6;
 
 	/** Player 1's paddle: position and size */
 	private int playerOneX = 0;
@@ -92,27 +92,32 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 	private int playerTwoHeight = 60;
 
 	/** Speed of the paddle - How fast the paddle move. */
-	private int paddleSpeed = 5;
+	private int paddleSpeed = 8;
 
 	/** Player score, show on upper left and right. */
 	private int playerOneScore;
 	private int playerTwoScore;
 
 	/** Icon game */
-	private ImageIcon imPlus = new ImageIcon("./icon/Plus.png"), imMinus = new ImageIcon("./icon/Minus.png");
+	private ImageIcon 	imPlus = new ImageIcon("./icon/Plus.png"),
+				imMinus = new ImageIcon("./icon/Minus.png"),
+				imFast = new ImageIcon("./icon/Fast.png"),
+				imSlow = new ImageIcon("./icon/Slow.png");
 	private int IconY;
 	private int IconX;
 	private int IconW_H = 30;
-	boolean blicon = false;
+	boolean blIconPM = false;
+	boolean blIconFS = false;
 	boolean playerOneHitBall = false;
 	boolean playerTwoHitBall = false;
-	boolean iconPlus = false;
-	boolean iconMinus = false;
-	int timeToDisplay;
-	int timeToOutDisplay = 4000;
+	int timeToDisplayPM;
+	int timeToDisplayFS;
+	int timeToOutDisplayPM = 4000;
+	int timeToOutDisplayFS = 4000;
 	int ranCongTru;
-	int IconPlusCenterX;
-	int IconPlusCenterY;
+	int ranFastSlow;
+	int IconCenterX;
+	int IconCenterY;
 
 	/** Sound */
 	Sound paddleSound = new Sound("./sound/pongsound.wav");
@@ -158,7 +163,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		// call step() 60 fps
 		Timer timer = new Timer(interval, this);
 		timer.start();
-		timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+		timeToDisplayPM = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+		timeToDisplayFS = ThreadLocalRandom.current().nextInt(20, 30 + 1) * 1000;
 	}
 
 	/** Implement actionPerformed */
@@ -203,8 +209,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			// FIXME Something not quite right here
 			int nextBallTop = ballY + ballDeltaY;
 			int nextBallBottom = ballY + diameter + ballDeltaY;
-			int nextBallCenterX = ballX + diameter + 10;
-			int nextBallCenterY = ballY + diameter + 10;
+			int nextBallCenterX = ballX + ballDeltaX + 10;
+			int nextBallCenterY = ballY + ballDeltaY + 10;
 
 			// Player 1's paddle position
 			int playerOneRight = playerOneX + playerOneWidth;
@@ -229,6 +235,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 				if (nextBallTop > playerOneBottom || nextBallBottom < playerOneTop) {
 
 					playerTwoScore++;
+					ballDeltaX = -2;
+					ballDeltaY = 6;
+					blIconFS = false;
+					blIconPM = false;
+					playerOneHeight = 60;
+					playerTwoHeight = 60;
 					goalSound.playSound();
 
 					// Player 2 Win, restart the game
@@ -255,7 +267,14 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 				if (nextBallTop > playerTwoBottom || nextBallBottom < playerTwoTop) {
 
 					playerOneScore++;
+					ballDeltaX = -2;
+					ballDeltaY = 6;
+					blIconFS = false;
+					blIconPM = false;
+					playerOneHeight = 60;
+					playerTwoHeight = 60;
 					goalSound.playSound();
+
 					// Player 1 Win, restart the game
 					if (playerOneScore == 3) {
 						playing = false;
@@ -274,30 +293,46 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 					playerTwoHitBall = true;
 				}
 			}
-
-			// Ball hit icon;
-			if (blicon == true) {
-				if ((nextBallCenterX + 10) >= (IconPlusCenterX - 10)
-						&& (nextBallCenterX - 10) <= (IconPlusCenterX + 10)) {
-					if ((nextBallCenterY + 10) >= (IconPlusCenterY - 10)
-							&& (nextBallCenterY - 10) <= (IconPlusCenterY + 10)) {
-						if (iconMinus == true) {
-							if (playerOneHitBall == true) {
+			
+			// Ball hit icon
+			if (blIconPM == true) {
+				if ((nextBallCenterX + 10) >= (IconCenterX - 10)
+						&& (nextBallCenterX - 10) <= (IconCenterX + 10)) {
+					if ((nextBallCenterY + 10) >= (IconCenterY - 10)
+							&& (nextBallCenterY - 10) <= (IconCenterY + 10)) {
+						if (ranCongTru % 2 == 0) {
+							if (playerOneHitBall) {
+								playerOneHeight += 10;
+							}
+							if (playerTwoHitBall) {
+								playerTwoHeight += 10;
+							}
+						} else {
+							if (playerOneHitBall) {
 								playerOneHeight -= 10;
 							}
-							if (playerTwoHitBall == true) {
+							if (playerTwoHitBall) {
 								playerTwoHeight -= 10;
 							}
 						}
-						if (iconPlus) {
-							if (playerOneHitBall == true) {
-								playerOneHeight += 10;
-							}
-							if (playerTwoHitBall == true) {
-								playerTwoHeight += 10;
-							}
+
+						blIconPM = false;
+					}
+				}
+			}
+			if (blIconFS == true) {
+				if ((nextBallCenterX + 10) >= (IconCenterX - 10)
+						&& (nextBallCenterX - 10) <= (IconCenterX + 10)) {
+					if ((nextBallCenterY + 10) >= (IconCenterY - 10)
+							&& (nextBallCenterY - 10) <= (IconCenterY + 10)) {
+						if (ranFastSlow % 2 == 0) {
+							ballDeltaX *= 1.5;
+							ballDeltaY *= 1.5;
+						} else {
+							ballDeltaX *= 0.5;
+							ballDeltaY *= 0.5;
 						}
-						blicon = false;
+						blIconFS = false;
 					}
 				}
 			}
@@ -399,34 +434,70 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			g.fillRect(getWidth() - 10, playerTwoY, playerTwoWidth, playerTwoHeight);
 
 			// draw icon
-			timeToDisplay -= interval;
-			if (timeToDisplay < 0) {
-				blicon = true;
-				if (blicon == true) {
-					IconX = ThreadLocalRandom.current().nextInt(getWidth() - 250) + 150;
-					IconY = ThreadLocalRandom.current().nextInt(getHeight() - 30) + 0;
-					IconPlusCenterX = IconX + 10;
-					IconPlusCenterY = IconY + 10;
+			timeToDisplayPM -= interval;
+			if (timeToDisplayPM < 0) {
+				blIconPM = true;
+				if (blIconPM == true) {
+					IconX = ThreadLocalRandom.current().nextInt(
+							getWidth() - 250) + 150;
+					IconY = ThreadLocalRandom.current().nextInt(
+							getHeight() - 30) + 0;
+					IconCenterX = IconX + 10;
+					IconCenterY = IconY + 10;
 					ranCongTru = ThreadLocalRandom.current().nextInt(20) + 1;
-					timeToDisplay = ThreadLocalRandom.current().nextInt(5, 15 + 1) * 1000;
+					timeToDisplayPM = ThreadLocalRandom.current().nextInt(5,
+							15 + 1) * 1000;
+					timeToOutDisplayPM -= interval;
 				}
 			}
-			if (blicon == true) {
+			timeToDisplayFS -= interval;
+			if (timeToDisplayFS < 0) {
+				blIconFS = true;
+				if (blIconFS == true) {
+					IconX = ThreadLocalRandom.current().nextInt(
+							getWidth() - 250) + 150;
+					IconY = ThreadLocalRandom.current().nextInt(
+							getHeight() - 30) + 0;
+					IconCenterX = IconX + 10;
+					IconCenterY = IconY + 10;
+					ranFastSlow = ThreadLocalRandom.current().nextInt(20) + 1;
+					timeToDisplayFS = ThreadLocalRandom.current().nextInt(20,
+							30 + 1) * 1000;
+					timeToOutDisplayFS -= interval;
+				}
+			}
+			if (blIconPM == true && blIconFS == false) {
 				IconW_H = 30;
 				if (ranCongTru % 2 == 0) {
-					iconPlus = true;
-					iconMinus = false;
-					g.drawImage(imPlus.getImage(), IconX, IconY, IconW_H, IconW_H, null);
+					g.drawImage(imPlus.getImage(), IconX, IconY, IconW_H,
+							IconW_H, null);
 				} else {
-					iconMinus = true;
-					iconPlus = false;
-					g.drawImage(imMinus.getImage(), IconX, IconY, IconW_H, IconW_H, null);
+					g.drawImage(imMinus.getImage(), IconX, IconY, IconW_H,
+							IconW_H, null);
 				}
-				timeToOutDisplay -= interval;
 			}
-			if (timeToOutDisplay < 0) {
-				blicon = false;
-				timeToOutDisplay = 4000;
+			if (blIconFS == true && blIconPM == false) {
+				if (ranFastSlow % 2 == 0) {
+					g.drawImage(imFast.getImage(), IconX, IconY, IconW_H,
+							IconW_H, null);
+				} else {
+					g.drawImage(imSlow.getImage(), IconX, IconY, IconW_H,
+							IconW_H, null);
+				}
+				playerOneHitBall = false;
+				playerTwoHitBall = false;
+			}
+			if (timeToOutDisplayPM < 0) {
+				blIconPM = false;
+				IconX = 0;
+				IconY = 0;
+				timeToOutDisplayPM = 4000;
+			}
+			if (timeToDisplayFS < 0) {
+				blIconFS = false;
+				IconX = 0;
+				IconY = 0;
+				timeToOutDisplayFS = 4000;
 			}
 
 		} else if (gameOver) {
@@ -453,9 +524,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			}
 			// Draw Restart message
 			g.setFont(new Font(Font.DIALOG, Font.BOLD, getWidth() / 22));
-			g.drawString("Press 'SPACE' to Restart the game.", getWidth() / 7, getHeight() * 4 / 5);
+			g.drawString("Press 'SPACE' to start the game.", getWidth() / 7, getHeight() * 4 / 5);
 			// TODO Draw a restart message
-			blicon = false;
+			blIconPM = false;
+			blIconFS = false;
 		}
 	}
 
@@ -463,8 +535,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		if (showTitleScreen) {
 			if (e.getKeyCode() == KeyEvent.VK_P) {
 				newgameSound.playSound();
-				showTitleScreen = false;
-				playing = true;
+				showTitleScreen = true;
+				playing = false;
 			}
 		} else if (playing) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -491,6 +563,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			playerOneHitBall = false;
 			playerTwoHeight = 60;
 			playerTwoHitBall = false;
+			ballDeltaX = -2;
+			ballDeltaY = 6;
+			blIconFS = false;
+			blIconPM = false;
 		}
 	}
 
