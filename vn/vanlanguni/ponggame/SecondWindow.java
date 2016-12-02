@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
@@ -26,6 +27,17 @@ public class SecondWindow extends JDialog{
 	//Xem khai bao MyDialogResult o cuoi class nay
 	public MyDialogResult dialogResult;
 	private JLabel lblChooseColorPaddle = new JLabel("Set Color Paddle: ");
+	private JLabel lblChooseBall = new JLabel("Set Ball: ");
+	private JRadioButton radSoccer = new JRadioButton("Soccer" );
+			JRadioButton radVolley = new JRadioButton("Volleyball");
+			JRadioButton radBBall = new JRadioButton("BasketBall ");
+			JRadioButton radIr = new JRadioButton("Ironman");
+			JRadioButton raddog = new JRadioButton("Dog ");
+			JRadioButton radAni = new JRadioButton("Anime");
+			private	ButtonGroup groupball = new ButtonGroup();
+	
+
+	
 	//add color
 	Color paddleColor;
 	public SecondWindow() {
@@ -49,10 +61,36 @@ public class SecondWindow extends JDialog{
 		JLabel lblUser_2 = new JLabel("Username 2");
 		lblUser_2.setBounds(10, 69, 71, 14);
 		getContentPane().add(lblUser_2);
+		add(radSoccer);
+		add(radVolley);
+		add(radBBall);
+		add(radAni);
+		add(radIr);
+		add(raddog);
+		radSoccer.setBounds(10,180,90,23);
+		radBBall.setBounds(10,200,90,23);
+		radVolley.setBounds(10,220,90,23);
+		/*radSoccer.setActionCommand(null);
+		radBBall.setActionCommand(null);
+		radVolley.setActionCommand(null);*/
+		radIr.setBounds(120, 180, 90, 23);
+		raddog.setBounds(120, 200, 90, 23);
+		radAni.setBounds(120, 220, 90, 23);
+		add(lblChooseBall);
+		lblChooseBall.setFont(new Font(Font.DIALOG, Font.BOLD, 25));
+		lblChooseBall.setBounds(5, 150, 300, 35);
 		
 		add(lblChooseColorPaddle);
 		lblChooseColorPaddle.setFont(new Font(Font.DIALOG, Font.BOLD, 25));
 		lblChooseColorPaddle.setBounds(5, 300, 250, 35);
+
+		  groupball.add(radBBall);
+		    groupball.add(radSoccer);
+		    groupball.add(radVolley);
+		    groupball.add(radAni);
+		    groupball.add(raddog);
+		    groupball.add(radIr);
+		   
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
@@ -86,7 +124,7 @@ public class SecondWindow extends JDialog{
 				}				
 			}
 		});
-		JButton btnPad=new JButton("Chose Color");
+		final JButton btnPad=new JButton("Chose Color");
 		add(btnPad);
 		btnPad.setBounds(10,350,150,25);
 		btnPad.addActionListener(new ActionListener() {
@@ -98,16 +136,39 @@ public class SecondWindow extends JDialog{
 				paddleColor=Colorchoose;
 			}
 		});
+
+	
 	}
 	
+
 	public Settings getSetings(){
 		Settings st = new Settings();
 		st.setUserName1(txtUsername1.getText());
 		st.setUserName2(txtUsername2.getText());
-		st.setBallNumber(1);
+		//st.setBallNumber(1);
+		
+		if (radSoccer.isSelected()) {
+			st.setBallNumber(1);
+		} else if (radBBall.isSelected()) {
+			st.setBallNumber(2);
+		}else if(radVolley.isSelected()){
+			st.setBallNumber(3);
+	
+			} else if (radIr.isSelected()) {
+			st.setBallNumber(4);
+		}else if(raddog.isSelected()){
+			st.setBallNumber(5);
+		}else if(radAni.isSelected()){
+			st.setBallNumber(6);}
+	
 		st.setPaddleColor(paddleColor);
 		return st;
 	}
-}
 
+
+	protected int ImageIcon(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}
 
