@@ -535,8 +535,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 		if (showTitleScreen) {
 			if (e.getKeyCode() == KeyEvent.VK_P) {
 				newgameSound.playSound();
-				showTitleScreen = true;
-				playing = false;
+				showTitleScreen = false;
+				playing = true;
 			}
 		} else if (playing) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -550,8 +550,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener {
 			}
 		} else if (gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
 			gameOver = false;
-			showTitleScreen = false;
-			playing = true;
+			showTitleScreen = true;
+			playing = false;
 			newgameSound.playSound();
 			playerOneScore = 0;
 			playerTwoScore = 0;
